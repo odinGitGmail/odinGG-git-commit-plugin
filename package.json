@@ -1,0 +1,118 @@
+{
+    "name": "git-commit-plugin",
+    "displayName": "git-commit-plugin",
+    "description": "Automatically generate git commit",
+    "version": "1.0.7",
+    "engines": {
+        "vscode": "^1.42.0"
+    },
+    "publisher": "redjue",
+    "license": "MIT",
+    "homepage": "https://github.com/RedJue/git-commit-plugin/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/RedJue/git-commit-plugin/issues"
+    },
+    "icon": "assets/logo.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/RedJue/git-commit-plugin"
+    },
+    "keywords": [
+        "git",
+        "commit",
+        "vscode"
+    ],
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.showGitCommit"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.showGitCommit",
+                "title": "show git commit template",
+                "icon": "$(octoface)"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Git Commit Plugin",
+            "properties": {
+                "GitCommitPlugin.ShowEmoji": {
+                    "type": "boolean",
+                    "default": true,
+                    "markdownDescription": "是否展现 `Emoji` 图标"
+                },
+                "GitCommitPlugin.CustomCommitType": {
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                        "type": [
+                            "object",
+                            "string"
+                        ]
+                    },
+                    "markdownDescription": "自定义添加 `Git Commit Type`",
+                    "scope": "resource"
+                },
+                "GitCommitPlugin.MaxSubjectWords": {
+                    "type": "number",
+                    "default": 20,
+                    "markdownDescription": "设置 **Subject** 的有效长度，默认 `20`"
+                },
+                "GitCommitPlugin.Templates": {
+                    "type": "array",
+                    "default": [],
+                    "markdownDescription": "commit提交模板，可以参考 Angular 模板设置",
+                    "items": [
+                        {
+                            "templateName": "Angular",
+                            "templateContent": "<icon><space><type>(<scope>):<space><subject><enter><body><enter><footer>"
+                        },
+                        {
+                            "templateName": "git-cz",
+                            "templateContent": "<type>(<scope>):<space><icon><space><subject><enter><body><enter><footer>"
+                        }
+                    ]
+                }
+            }
+        },
+        "menus": {
+            "scm/title": [
+                {
+                    "when": "scmProvider == git",
+                    "command": "extension.showGitCommit",
+                    "group": "navigation"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "lint": "eslint src --ext ts --fix",
+        "watch": "tsc -watch -p ./",
+        "build": "vsce package",
+        "pretest": "npm run compile && npm run lint",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^7.0.1",
+        "@types/node": "^12.11.7",
+        "@types/vscode": "^1.42.0",
+        "@typescript-eslint/eslint-plugin": "^2.18.0",
+        "@typescript-eslint/parser": "^2.18.0",
+        "eslint": "^6.8.0",
+        "glob": "^7.1.6",
+        "mocha": "^7.0.1",
+        "typescript": "^3.7.5",
+        "vscode-test": "^1.3.0"
+    },
+    "dependencies": {
+        "vsce": "^1.95.0"
+    }
+}
